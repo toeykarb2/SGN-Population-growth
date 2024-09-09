@@ -22,9 +22,9 @@ const HomePage = () => {
         setCsvData(data);
       } catch (err: unknown) {
         if (err instanceof Error) {
-          console.error(err.message); 
+          setError(err.message); 
         } else {
-          console.error("Unknown error", err);
+          setError("Unknown error");
         }
       } finally {
         setLoading(false);
