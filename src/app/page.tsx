@@ -2,7 +2,7 @@
 
 import BarChartRace from './components/BarChartRace';
 import { useEffect, useState } from 'react';
-import { BarChartRaceProps, YearData } from './types/data.types';
+import { YearData } from './types/data.types';
 import '../app/globals.css';
 
 
@@ -40,7 +40,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <h1 className='title'>Bar Chart Race</h1>
+      <h1 className='title'>Population growth per country, 1950 to 2021</h1>
       <BarChartRace data={csvData} />
     </div>
   );

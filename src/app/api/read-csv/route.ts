@@ -77,7 +77,7 @@ const countryToContinent: Record<string, string> = {
     "Vietnam": "Asia", "Yemen": "Asia", "Zambia": "Africa", "Zimbabwe": "Africa"
 };
 
-export async function GET(req: NextRequest) {
+export async function GET() {
     const csvFilePath = path.join(process.cwd(), 'src/data', 'population.csv'); // Adjust path
     const results: Record<string, any[]> = {}; // Object to hold the final structured data
 
