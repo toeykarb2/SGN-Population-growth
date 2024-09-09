@@ -34,7 +34,7 @@ const BarChartRace: React.FC<BarChartRaceProps> = ({ data }) => {
         svg.attr("width", width).attr("height", height);
 
         const updateChart = (year: string) => {
-            let currentData = data[year]
+            const currentData = data[year]
                 .filter(d => selectedContinents.length === 0 || !selectedContinents.includes(d.Continent))
                 .sort((a, b) => b.Population - a.Population)
                 .slice(0, 12);
