@@ -20,8 +20,12 @@ const HomePage = () => {
         }
         const data = await response.json();
         setCsvData(data);
-      } catch (err: any) {
-        setError(err.message || 'Unknown error');
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          console.error(err.message); 
+        } else {
+          console.error("Unknown error", err);
+        }
       } finally {
         setLoading(false);
       }

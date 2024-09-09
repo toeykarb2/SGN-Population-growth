@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import path from 'path';
 import fs from 'fs';
 import csv from 'csv-parser';
@@ -79,7 +79,7 @@ const countryToContinent: Record<string, string> = {
 
 export async function GET() {
     const csvFilePath = path.join(process.cwd(), 'src/data', 'population.csv'); // Adjust path
-    const results: Record<string, any[]> = {}; // Object to hold the final structured data
+    const results: Record<string, unknown[]> = {}; // Object to hold the final structured data
 
     try {
         const fileStream = fs.createReadStream(csvFilePath).pipe(csv());

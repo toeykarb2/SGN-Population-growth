@@ -2,7 +2,7 @@
 
 
 import React, { useEffect, useRef, useState } from "react";
-import { BarChartRaceProps } from "../types/data.types";
+import { BarChartRaceProps, CountryData } from "../types/data.types";
 import '../globals.css';
 import * as d3 from "d3";
 
@@ -22,6 +22,7 @@ const BarChartRace: React.FC<BarChartRaceProps> = ({ data }) => {
 
     // Define a color for the default button
     const defaultButtonColor = "#000000"; // Black color for default button
+    
 
     useEffect(() => {
         if (!svgRef.current) return;
@@ -56,16 +57,18 @@ const BarChartRace: React.FC<BarChartRaceProps> = ({ data }) => {
             // Define the axis
             const xAxis = d3.axisBottom(xScale).ticks(5).tickFormat(d3.format(".2s"));
 
-            // Update x-axis
-            svg
-                .select(".x-axis")
-                .attr("transform", `translate(0, ${height - margin.bottom})`)
+            // Select the axis group
+            const xAxisGroup = svg
+                .select<SVGGElement>(".x-axis")
+                .attr("transform", `translate(0, ${height - margin.bottom})`);
+
+            xAxisGroup
                 .transition()
                 .duration(500)
-                .call(xAxis as any); // Cast to any to satisfy TypeScript
+                .call(xAxis);
 
             // JOIN new data with old elements
-            const bars = svg.selectAll(".bar").data(currentData, (d: any) => d.Country_name);
+            const bars = svg.selectAll<SVGTextElement, CountryData>(".bar").data(currentData, (d: CountryData) => d.Country_name);
 
             // EXIT old elements not present in new data
             bars.exit().remove();
@@ -93,8 +96,8 @@ const BarChartRace: React.FC<BarChartRaceProps> = ({ data }) => {
 
             // Labels
             svg
-                .selectAll(".label")
-                .data(currentData, (d: any) => d.Country_name)
+                .selectAll<SVGTextElement, CountryData>(".label")
+                .data(currentData, (d: CountryData) => d.Country_name)
                 .join("text")
                 .attr("class", "label")
                 .attr("x", margin.left - 10)
@@ -105,8 +108,8 @@ const BarChartRace: React.FC<BarChartRaceProps> = ({ data }) => {
 
             // Population labels on bars
             svg
-                .selectAll(".population")
-                .data(currentData, (d: any) => d.Country_name)
+                .selectAll<SVGTextElement, CountryData>(".population")
+                .data(currentData, (d: CountryData) => d.Country_name)
                 .join("text")
                 .attr("class", "population")
                 .attr("x", (d) => {
