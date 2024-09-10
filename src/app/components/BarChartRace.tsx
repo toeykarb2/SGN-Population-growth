@@ -18,7 +18,7 @@ const BarChartRace: React.FC<BarChartRaceProps> = ({ data }) => {
     // Define a color scale for continents
     const continentColors = d3.scaleOrdinal<string>()
         .domain(["Asia", "Europe", "Africa", "America", "Australia"])
-        .range(["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd"]);
+        .range(["#159af7", "#ec7106", "#00db00", "#dfcf04", "#a341fb"]);
 
     // Define a color for the default button
     const defaultButtonColor = "#000000"; // Black color for default button
@@ -120,6 +120,32 @@ const BarChartRace: React.FC<BarChartRaceProps> = ({ data }) => {
                 .attr("dy", "0.35em")
                 .attr("text-anchor", "start")
                 .text((d) => d.Population.toLocaleString());
+
+            // Remove old flags
+            svg.selectAll<SVGImageElement, CountryData>(".flag").remove();
+
+            // Add new flags
+            svg
+                .selectAll<SVGImageElement, CountryData>(".flag")
+                .data(currentData, (d: CountryData) => d.Country_name)
+                .join("image")
+                .attr("class", "flag")
+                .attr("xlink:href", d => `/flags/${d.Flags}.svg`) // Assuming your data has a Flag_url field
+                .attr("x", d => xScale(d.Population) - 30) // Adjust based on your flag size
+                .attr("y", d => yScale(d.Country_name) as number)
+                .attr("width", 30) // Adjust flag size
+                .attr("height", yScale.bandwidth())
+                .attr("clip-path", "url(#clip)"); // Clip path to handle overlapping
+
+            // Ensure clip path is correct
+            svg.select("defs").select("clipPath").remove();
+            svg.append("defs").append("clipPath")
+                .attr("id", "clip")
+                .append("rect")
+                .attr("x", margin.left)
+                .attr("y", margin.top)
+                .attr("width", width - margin.left - margin.right)
+                .attr("height", height - margin.top - margin.bottom);
 
             // Year label
             svg
