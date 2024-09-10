@@ -209,7 +209,7 @@ const BarChartRace: React.FC<BarChartRaceProps> = ({ data }) => {
         cursor: "pointer",
         fontWeight: "normal",
         backgroundColor: defaultButtonColor, // Black color for default button
-        color: "#fff",
+        color: "#000000",
     };
 
     // Circular button styles
@@ -251,10 +251,9 @@ const BarChartRace: React.FC<BarChartRaceProps> = ({ data }) => {
                         style={{
                             ...buttonStyle,
                             backgroundColor: getButtonColor(continent),
-                            color: "#fff",
-                            fontWeight: selectedContinents.includes(continent) ? "bold" : "normal",
+                            fontWeight: selectedContinents.includes(continent) ? "normal" : "bold",
                             cursor: selectedContinents.includes(continent) ? "default" : "pointer",
-                            opacity: selectedContinents.includes(continent) ? 0.7 : 1,
+                            opacity: selectedContinents.includes(continent) ? 0.5 : 1,
                         }}
                     >
                         {continent}
